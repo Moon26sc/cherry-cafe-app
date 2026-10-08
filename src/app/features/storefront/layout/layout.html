@@ -1,0 +1,65 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" routerLink="/inicio">
+                <img src="assets/img/logo-mark-claro.svg" alt="Cherry Café" height="40" class="brand-mark me-2">
+                <span class="brand-type"><span class="brand-script">Cherry</span><span class="brand-serif">Café</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuCherry">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuCherry">
+                <ul class="navbar-nav ms-auto mb-3 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" routerLink="/inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/menu">Menú</a></li>
+                    
+                    <li class="nav-item ms-lg-3">
+                        <button type="button" class="btn btn-outline-light btn-sm position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+                            <i class="bi bi-cup-hot"></i> Pedido
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                        </button>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <!-- Botón provisional de Login para la interfaz -->
+                        <button type="button" class="btn btn-outline-light btn-sm" routerLink="/login">
+                            <i class="bi bi-person-circle me-1"></i> Iniciar sesión
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="flex-grow-1">
+    <!-- Aquí se inyectarán dinámicamente Inicio y Menú -->
+    <router-outlet></router-outlet>
+</main>
+
+<footer class="bg-dark text-white-50 py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        <div class="d-flex align-items-center">
+            <img src="assets/img/logo-mark-claro.svg" alt="" height="30" class="brand-mark me-2">
+            <span class="brand-type"><span class="brand-script">Cherry</span><span class="brand-serif">Café</span></span>
+        </div>
+        <ul class="list-inline mb-0 small">
+            <li class="list-inline-item"><a class="link-light text-decoration-none" routerLink="/inicio">Inicio</a></li>
+            <li class="list-inline-item ms-3"><a class="link-light text-decoration-none" routerLink="/menu">Menú</a></li>
+        </ul>
+        <div class="small">&copy; 2026 Cherry Café</div>
+    </div>
+</footer>
+
+<!-- OFFCANVAS CARRITO PROVISIONAL -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title"><i class="bi bi-cup-hot me-2"></i>Tu pedido</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+        <div class="text-secondary text-center my-4">
+            <i class="bi bi-cup fs-1 d-block mb-2"></i>
+            Todavía no agregaste productos.
+        </div>
+    </div>
+</div>

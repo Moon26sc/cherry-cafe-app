@@ -1,1 +1,256 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Petit+Formal+Script&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --cf-cream-soft: #F5EFE4;
+    --cf-cream: #E9DFC8;
+    --cf-black: #14130A;      /* Black Raspberry */
+    --cf-bistre: #3B2C20;     /* Bistre */
+    --cf-brown: #6A5745;      /* Baby Bear */
+    --cf-green: #2F3D20;      /* Forestry */
+    --cf-green-dark: #202A16; /* Forestry, tono hover */
+    --cf-sage: #758956;       /* Moss Gardens */
+    --cf-sage-light: #A7B98A; /* Moss Gardens, tono claro para fondos oscuros */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--cf-black);
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ---------- Logotipo (marca + tipografía) ---------- */
+.brand-mark {
+    filter: drop-shadow(0 3px 6px rgba(20, 19, 10, 0.28));
+}
+.brand-type {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    white-space: nowrap;
+}
+.brand-script {
+    font-family: 'Petit Formal Script', cursive;
+    font-size: 1.85rem;
+    line-height: 1;
+}
+.brand-serif {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.navbar-brand .brand-script { color: var(--cf-cream-soft); }
+.navbar-brand .brand-serif  { color: var(--cf-sage-light); }
+.navbar-brand img { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+
+footer .brand-script { font-size: 1.3rem; color: var(--cf-cream-soft); }
+footer .brand-serif  { font-size: 0.72rem; color: var(--cf-sage-light); }
+footer img.me-2 { filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
+
+/* ---------- Navbar & Footer ---------- */
+.navbar.bg-dark,
+footer.bg-dark {
+    background-color: var(--cf-bistre) !important;
+}
+
+.navbar .btn-outline-light {
+    border-color: var(--cf-cream);
+    color: var(--cf-cream);
+}
+.navbar .btn-outline-light:hover {
+    background-color: var(--cf-cream);
+    color: var(--cf-bistre);
+}
+.navbar .btn-light {
+    background-color: var(--cf-cream);
+    border-color: var(--cf-cream);
+    color: var(--cf-bistre);
+}
+.navbar .btn-light:hover {
+    background-color: var(--cf-cream-soft);
+}
+
+footer a.link-light:hover {
+    color: var(--cf-cream) !important;
+}
+
+/* ---------- Secciones con fondo claro ---------- */
+.bg-light {
+    background-color: var(--cf-cream-soft) !important;
+}
+
+/* ---------- Botones y acentos ---------- */
+.btn-dark {
+    background-color: var(--cf-green);
+    border-color: var(--cf-green);
+}
+.btn-dark:hover,
+.btn-dark:focus {
+    background-color: var(--cf-green-dark);
+    border-color: var(--cf-green-dark);
+}
+
+.btn-outline-dark {
+    color: var(--cf-green);
+    border-color: var(--cf-green);
+}
+.btn-outline-dark:hover {
+    background-color: var(--cf-green);
+    border-color: var(--cf-green);
+    color: #fff;
+}
+
+.badge.bg-dark {
+    background-color: var(--cf-bistre) !important;
+    color: var(--cf-cream-soft);
+}
+
+.text-secondary {
+    color: var(--cf-brown) !important;
+}
+
+hr.bg-dark {
+    background-color: var(--cf-green) !important;
+}
+
+.table-dark {
+    --bs-table-bg: var(--cf-bistre);
+}
+
+/* ---------- Íconos de experiencia (home) ---------- */
+#experiencia .bi {
+    color: var(--cf-green) !important;
+}
+#experiencia .bg-light {
+    background-color: var(--cf-cream-soft) !important;
+    border-color: var(--cf-cream) !important;
+}
+
+/* ---------- Hero: nuevo lockup del logo ---------- */
+.hero-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 2rem 0;
+}
+.hero-brand-halo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--cf-cream) 0%, rgba(233, 223, 200, 0) 72%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-brand-icon {
+    width: 96px;
+    height: 96px;
+    filter: drop-shadow(0 10px 18px rgba(47, 61, 32, 0.28));
+}
+.hero-brand-type {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+}
+.hero-brand-type .brand-script {
+    font-size: 4.2rem;
+    color: var(--cf-green);
+}
+.hero-brand-type .brand-serif {
+    font-size: 1.3rem;
+    color: var(--cf-bistre);
+}
+.hero-brand-rule {
+    width: 70px;
+    height: 1px;
+    background-color: var(--cf-brown);
+    position: relative;
+    margin: 0.3rem 0;
+    opacity: 0.6;
+}
+.hero-brand-rule::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background-color: var(--cf-sage);
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.hero-brand-sub {
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-size: 0.72rem;
+    color: var(--cf-brown);
+}
+
+/* ---------- Fotografías: marco consistente en retrato ---------- */
+.cf-photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 18px 40px rgba(20, 19, 10, 0.18);
+    aspect-ratio: 4 / 5;
+}
+.cf-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---------- Menú: tarjetas de producto en formato retrato ---------- */
+.menu-photo {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+.menu-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---------- Cierre / CTA ---------- */
+#cierre.bg-dark {
+    background-color: var(--cf-green) !important;
+}
+
+/* ---------- Links de navegación activos ---------- */
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--cf-cream);
+}
+
+/* ---------- Carrito de pedido (offcanvas) ---------- */
+.offcanvas-header {
+    background-color: var(--cf-bistre);
+    color: var(--cf-cream-soft);
+}
+.offcanvas-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+#carritoContador {
+    background-color: var(--cf-sage) !important;
+}
+.btn-comprar:disabled {
+    opacity: 0.6;
+}
+
+/* ---------- Buscador y filtro del menú ---------- */
+#filtroCategorias .btn.active {
+    background-color: var(--cf-green);
+    border-color: var(--cf-green);
+    color: #fff;
+}
+
