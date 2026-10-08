@@ -1,0 +1,60 @@
+<div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+    <div class="card-body p-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold mb-1">Crear Cuenta</h2>
+            <p class="text-secondary small">Únete a Cherry Café y gestiona tus pedidos</p>
+        </div>
+
+        <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+            
+            <div class="mb-3">
+                <label class="form-label text-secondary small fw-semibold">Nombre completo</label>
+                <input type="text" class="form-control form-control-lg bg-light" formControlName="nombre" placeholder="Ej. Juan Pérez">
+                <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="text-danger small mt-1">
+                    <i class="bi bi-exclamation-circle me-1"></i> El nombre es obligatorio.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-secondary small fw-semibold">Correo electrónico</label>
+                <input type="email" class="form-control form-control-lg bg-light" formControlName="email" placeholder="ejemplo@correo.com">
+                <div *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched" class="text-danger small mt-1">
+                    <i class="bi bi-exclamation-circle me-1"></i> Ingresa un correo válido.
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label text-secondary small fw-semibold">Contraseña</label>
+                    <input type="password" class="form-control form-control-lg bg-light" formControlName="password" placeholder="••••••••">
+                    <div *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched" class="text-danger small mt-1">
+                        <i class="bi bi-exclamation-circle me-1"></i> Mínimo 6 caracteres.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-secondary small fw-semibold">Confirmar</label>
+                    <input type="password" class="form-control form-control-lg bg-light" formControlName="confirmPassword" placeholder="••••••••">
+                </div>
+                <!-- Mensaje condicional de validación de contraseñas -->
+                <div class="col-12 text-danger small mt-1" *ngIf="passwordsNoCoinciden">
+                    <i class="bi bi-exclamation-circle me-1"></i> Las contraseñas no coinciden. Inténtalo de nuevo.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg w-100 mb-3 fw-semibold">
+                Registrarme
+            </button>
+            
+            <div class="text-center">
+                <span class="text-secondary small">¿Ya tienes una cuenta?</span>
+                <a routerLink="/auth/login" class="text-dark fw-bold text-decoration-none ms-1 small">Inicia sesión aquí</a>
+            </div>
+        </form>
+    </div>
+    
+    <div class="card-footer bg-light border-0 text-center py-3">
+        <a routerLink="/inicio" class="text-secondary text-decoration-none small">
+            <i class="bi bi-arrow-left me-1"></i> Volver a la tienda
+        </a>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+    <div class="card-body p-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold mb-1">Bienvenido</h2>
+            <p class="text-secondary small">Ingresa tus credenciales para continuar</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+            
+            <div class="mb-3">
+                <label class="form-label text-secondary small fw-semibold">Correo electrónico</label>
+                <input type="email" class="form-control form-control-lg bg-light" formControlName="email" placeholder="ejemplo@correo.com">
+                
+                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger small mt-1">
+                    <i class="bi bi-exclamation-circle me-1"></i> Ingresa un correo válido.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label text-secondary small fw-semibold">Contraseña</label>
+                    <a href="#" class="small text-decoration-none text-dark">¿Olvidaste tu contraseña?</a>
+                </div>
+                <input type="password" class="form-control form-control-lg bg-light" formControlName="password" placeholder="••••••••">
+                
+                <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger small mt-1">
+                    <i class="bi bi-exclamation-circle me-1"></i> Mínimo 6 caracteres.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg w-100 mb-3 fw-semibold">
+                Iniciar Sesión
+            </button>
+            
+            <div class="text-center">
+                <span class="text-secondary small">¿No tienes cuenta?</span>
+                <a routerLink="/auth/registro" class="text-dark fw-bold text-decoration-none ms-1 small">Regístrate aquí</a>
+            </div>
+        </form>
+    </div>
+    
+    <div class="card-footer bg-light border-0 text-center py-3">
+        <a routerLink="/inicio" class="text-secondary text-decoration-none small">
+            <i class="bi bi-arrow-left me-1"></i> Volver a la tienda
+        </a>
+    </div>
+</div>

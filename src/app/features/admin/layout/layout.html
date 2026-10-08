@@ -1,0 +1,53 @@
+<div class="d-flex min-vh-100 bg-light">
+    
+    <!-- ================= SIDEBAR ADMINISTRATIVO ================= -->
+    <div class="bg-dark text-white p-3 d-flex flex-column shadow-sm" style="width: 260px; position: sticky; top: 0; height: 100vh;">
+        <a routerLink="/admin/dashboard" class="d-flex align-items-center text-white text-decoration-none mb-4 mt-2">
+            <i class="bi bi-cup-hot-fill fs-3 me-2" style="color: #ff4757;"></i>
+            <span class="fs-4 fw-semibold">CherryAdmin</span>
+        </a>
+        
+        <ul class="nav nav-pills flex-column mb-auto gap-2">
+            <li class="nav-item">
+                <a routerLink="/admin/dashboard" routerLinkActive="bg-primary text-white" [routerLinkActiveOptions]="{exact: true}" class="nav-link text-white-50">
+                    <i class="bi bi-graph-up me-2"></i> Resumen
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/admin/productos" routerLinkActive="bg-primary text-white" class="nav-link text-white-50">
+                    <i class="bi bi-box-seam me-2"></i> Gestión de Productos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white-50">
+                    <i class="bi bi-receipt me-2"></i> Pedidos Entrantes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white-50">
+                    <i class="bi bi-people me-2"></i> Usuarios
+                </a>
+            </li>
+        </ul>
+        
+        <hr class="border-secondary">
+        
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle fs-5 me-2"></i>
+                <strong>Administrador</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" routerLink="/inicio" target="_blank"><i class="bi bi-shop me-2"></i>Ver tienda pública</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ================= ÁREA DE CONTENIDO DINÁMICO ================= -->
+    <div class="flex-grow-1 p-4 overflow-auto">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>
