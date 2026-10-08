@@ -3,7 +3,8 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" routerLink="/inicio">
                 <img src="assets/img/logo-mark-claro.svg" alt="Cherry Café" height="40" class="brand-mark me-2">
-                <span class="brand-type"><span class="brand-script">Cherry</span><span class="brand-serif">Café</span></span>
+                <span class="brand-type"><span class="brand-script">Cherry</span><span
+                        class="brand-serif">Café</span></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuCherry">
                 <span class="navbar-toggler-icon"></span>
@@ -12,11 +13,15 @@
                 <ul class="navbar-nav ms-auto mb-3 mb-lg-0 align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" routerLink="/inicio">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" routerLink="/menu">Menú</a></li>
-                    
+
                     <li class="nav-item ms-lg-3">
-                        <button type="button" class="btn btn-outline-light btn-sm position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+                        <button type="button" class="btn btn-outline-light btn-sm position-relative"
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
                             <i class="bi bi-cup-hot"></i> Pedido
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ (carritoService.totalItems$ | async) || 0 }}
+                            </span>
                         </button>
                     </li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
@@ -40,26 +45,59 @@
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
         <div class="d-flex align-items-center">
             <img src="assets/img/logo-mark-claro.svg" alt="" height="30" class="brand-mark me-2">
-            <span class="brand-type"><span class="brand-script">Cherry</span><span class="brand-serif">Café</span></span>
+            <span class="brand-type"><span class="brand-script">Cherry</span><span
+                    class="brand-serif">Café</span></span>
         </div>
         <ul class="list-inline mb-0 small">
             <li class="list-inline-item"><a class="link-light text-decoration-none" routerLink="/inicio">Inicio</a></li>
-            <li class="list-inline-item ms-3"><a class="link-light text-decoration-none" routerLink="/menu">Menú</a></li>
+            <li class="list-inline-item ms-3"><a class="link-light text-decoration-none" routerLink="/menu">Menú</a>
+            </li>
         </ul>
         <div class="small">&copy; 2026 Cherry Café</div>
     </div>
 </footer>
 
-<!-- OFFCANVAS CARRITO PROVISIONAL -->
+<!-- OFFCANVAS CARRITO -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title"><i class="bi bi-cup-hot me-2"></i>Tu pedido</h5>
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold"><i class="bi bi-cup-hot me-2"></i>Tu pedido</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
-    <div class="offcanvas-body d-flex flex-column">
-        <div class="text-secondary text-center my-4">
-            <i class="bi bi-cup fs-1 d-block mb-2"></i>
-            Todavía no agregaste productos.
+    <div class="offcanvas-body d-flex flex-column p-0">
+        
+        <!-- Si el carrito está vacío -->
+        <div class="text-secondary text-center my-5 px-3" *ngIf="(carritoService.carrito$ | async)?.length === 0">
+            <i class="bi bi-cart-x fs-1 d-block mb-3 text-muted"></i>
+            <p>Todavía no has agregado productos a tu pedido.</p>
+            <button class="btn btn-outline-dark mt-2" data-bs-dismiss="offcanvas" routerLink="/menu">Ver menú</button>
+        </div>
+
+        <!-- Lista de productos -->
+        <ul class="list-group list-group-flush mb-auto overflow-auto">
+            <li class="list-group-item py-3" *ngFor="let item of (carritoService.carrito$ | async)">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="fw-bold">{{ item.producto.nombre }}</span>
+                    <button class="btn btn-link text-danger p-0" (click)="carritoService.eliminar(item.producto.nombre)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center text-secondary small">
+                    <span>{{ item.cantidad }} x S/ {{ item.producto.precio.toFixed(2) }}</span>
+                    <span class="fw-bold text-dark">S/ {{ (item.producto.precio * item.cantidad).toFixed(2) }}</span>
+                </div>
+            </li>
+        </ul>
+
+        <!-- Zona de pago (solo se muestra si hay items) -->
+        <div class="p-3 border-top bg-light" *ngIf="(carritoService.carrito$ | async)!.length > 0">
+            <div class="d-flex justify-content-between fs-5 fw-bold mb-3">
+                <span>Total:</span>
+                <span>S/ {{ (carritoService.totalPrecio$ | async)?.toFixed(2) }}</span>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-dark btn-lg">Proceder al pago</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" (click)="carritoService.vaciar()">Vaciar pedido</button>
+            </div>
         </div>
     </div>
 </div>
