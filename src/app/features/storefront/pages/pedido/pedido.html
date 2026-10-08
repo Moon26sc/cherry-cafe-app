@@ -1,0 +1,91 @@
+<section class="bg-light py-5 min-vh-100">
+    <div class="container">
+        <div class="mb-5 text-center text-md-start">
+            <h1 class="fw-bold">Finalizar Pedido</h1>
+            <p class="text-secondary">Completa tus datos para confirmar tu compra en Cherry Café.</p>
+        </div>
+
+        <div class="row g-5">
+            <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm p-4">
+                    <h4 class="mb-4">Datos de Entrega</h4>
+                    <form (ngSubmit)="procesarPedido()">
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre completo</label>
+                                <input type="text" class="form-control" required placeholder="Ej. Juan Pérez">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono celular</label>
+                                <input type="tel" class="form-control" required placeholder="999 888 777">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Dirección de entrega</label>
+                                <input type="text" class="form-control" required placeholder="Av. Principal 123, Ref: Frente al parque">
+                            </div>
+                        </div>
+
+                        <h4 class="mb-4 pt-3 border-top">Método de Pago</h4>
+                        <div class="mb-4">
+                            <div class="form-check border rounded p-3 mb-2">
+                                <input class="form-check-input ms-1" type="radio" name="pago" id="pagoYape" checked>
+                                <label class="form-check-label ms-2 d-flex align-items-center" for="pagoYape">
+                                    <i class="bi bi-phone-vibrate fs-4 me-2 text-primary"></i> Yape / Plin
+                                </label>
+                            </div>
+                            <div class="form-check border rounded p-3">
+                                <input class="form-check-input ms-1" type="radio" name="pago" id="pagoEfectivo">
+                                <label class="form-check-label ms-2 d-flex align-items-center" for="pagoEfectivo">
+                                    <i class="bi bi-cash fs-4 me-2 text-success"></i> Efectivo al entregar
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Botón para confirmar -->
+                        <button type="submit" class="btn btn-dark btn-lg w-100 mt-2" 
+                                [disabled]="(carritoService.carrito$ | async)?.length === 0">
+                            Confirmar y Enviar Pedido
+                        </button>
+                        <p class="text-center text-secondary small mt-3">Al confirmar, aceptas nuestros términos de servicio.</p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: RESUMEN DEL CARRITO -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm p-4 sticky-top" style="top: 2rem;">
+                    <h4 class="mb-4">Resumen del Pedido</h4>
+                    
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item px-0 py-3" *ngFor="let item of (carritoService.carrito$ | async)">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">{{ item.producto.nombre }}</h6>
+                                    <small class="text-secondary">Cantidad: {{ item.cantidad }}</small>
+                                </div>
+                                <span class="fw-bold">S/ {{ (item.producto.precio * item.cantidad).toFixed(2) }}</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="border-top pt-3 mt-2">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-secondary">Subtotal</span>
+                            <span>S/ {{ (carritoService.totalPrecio$ | async)?.toFixed(2) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-secondary">Costo de envío</span>
+                            <span class="text-success">Gratis</span>
+                        </div>
+                        <div class="d-flex justify-content-between fs-4 fw-bold">
+                            <span>Total</span>
+                            <span>S/ {{ (carritoService.totalPrecio$ | async)?.toFixed(2) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
