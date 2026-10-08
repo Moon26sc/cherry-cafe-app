@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth'; 
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,8 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService); 
 
-  // Reglas estrictas: correo válido y contraseña de mínimo 6 caracteres
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
@@ -21,20 +22,24 @@ export class LoginComponent {
 
   iniciarSesion() {
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched(); // Muestra los errores en rojo si intentan enviar vacío
+      this.loginForm.markAllAsTouched();
       return;
     }
 
-    const { email, password } = this.loginForm.value;
-
-    // SIMULACIÓN DE RUTEO POR ROLES
-    // En el futuro, tu API devolverá un JWT con el rol del usuario
-    if (email === 'admin@cherry.com' && password === '123456') {
-      console.log('Login exitoso: Administrador');
-      this.router.navigate(['/admin/dashboard']);
-    } else {
-      console.log('Login exitoso: Cliente');
-      this.router.navigate(['/inicio']);
-    }
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (respuesta) => {
+        const usuarioDB = respuesta.usuario;
+        console.log('Usuario autenticado:', usuarioDB);
+        
+        if (usuarioDB.rol === 'ADMIN') {
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          this.router.navigate(['/inicio']);
+        }
+      },
+      error: (err) => {
+        alert(err.error.mensaje || 'Credenciales incorrectas');
+      }
+    });
   }
 }

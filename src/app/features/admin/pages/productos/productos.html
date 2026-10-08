@@ -1,12 +1,13 @@
 <div class="container-fluid pb-4">
-    
+
     <!-- Encabezado y Acción Principal -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
         <div>
             <h2 class="fw-bold mb-0">Catálogo de Productos</h2>
             <p class="text-secondary mb-0">Gestiona los ítems de tu base de datos</p>
         </div>
-        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalFormulario" (click)="abrirModalNuevo()">
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalFormulario"
+            (click)="abrirModalNuevo()">
             <i class="bi bi-plus-lg me-1"></i> Añadir Producto
         </button>
     </div>
@@ -32,18 +33,25 @@
                         <tr *ngFor="let producto of productos">
                             <td class="ps-4 text-secondary fw-semibold">#{{ producto.id }}</td>
                             <td>
-                                <img [src]="producto.imagen" class="rounded border" width="45" height="45" style="object-fit: cover;" alt="">
+                                <img [src]="producto.imagen" class="rounded border" width="45" height="45"
+                                    style="object-fit: cover;" alt="">
                             </td>
                             <td class="fw-bold">{{ producto.nombre }}</td>
                             <td><span class="badge bg-light text-dark border">{{ producto.categoria }}</span></td>
                             <td>S/ {{ producto.precio.toFixed(2) }}</td>
+                            <!-- Cambia el <td> del estado por este: -->
                             <td>
-                                <span class="badge" [ngClass]="producto.disponible ? 'bg-success' : 'bg-danger'">
+                                <button class="btn btn-sm text-white border-0 fw-semibold"
+                                    [ngClass]="producto.disponible ? 'bg-success' : 'bg-danger'"
+                                    (click)="toggleDisponibilidad(producto)">
+                                    <i class="bi"
+                                        [ngClass]="producto.disponible ? 'bi-check-circle' : 'bi-x-circle'"></i>
                                     {{ producto.disponible ? 'Activo' : 'Agotado' }}
-                                </span>
+                                </button>
                             </td>
                             <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#modalFormulario" (click)="abrirModalEditar(producto)">
+                                <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal"
+                                    data-bs-target="#modalFormulario" (click)="abrirModalEditar(producto)">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger" (click)="eliminarProducto(producto.id)">
@@ -51,7 +59,7 @@
                                 </button>
                             </td>
                         </tr>
-                        
+
                         <!-- Si la base de datos está vacía -->
                         <tr *ngIf="productos.length === 0">
                             <td colspan="7" class="text-center py-5 text-secondary">
@@ -70,7 +78,7 @@
 <div class="modal fade" id="modalFormulario" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            
+
             <div class="modal-header bg-light">
                 <h5 class="modal-title fw-bold">
                     <i class="bi" [ngClass]="modoEdicion ? 'bi-pencil-square' : 'bi-plus-circle'"></i>
@@ -85,7 +93,8 @@
                     <div class="row g-3">
                         <div class="col-md-8">
                             <label class="form-label fw-semibold">Nombre del producto</label>
-                            <input type="text" class="form-control" formControlName="nombre" placeholder="Ej. Latte Caramel">
+                            <input type="text" class="form-control" formControlName="nombre"
+                                placeholder="Ej. Latte Caramel">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label fw-semibold">Precio (S/)</label>
@@ -104,7 +113,8 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Ruta de Imagen</label>
-                            <input type="text" class="form-control" formControlName="imagen" placeholder="assets/img/nombre.jpg">
+                            <input type="text" class="form-control" formControlName="imagen"
+                                placeholder="assets/img/nombre.jpg">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold">Descripción corta</label>
@@ -112,7 +122,8 @@
                         </div>
                         <div class="col-12 mt-4">
                             <div class="form-check form-switch fs-5">
-                                <input class="form-check-input" type="checkbox" role="switch" id="switchDispo" formControlName="disponible">
+                                <input class="form-check-input" type="checkbox" role="switch" id="switchDispo"
+                                    formControlName="disponible">
                                 <label class="form-check-label ms-2 mt-1 fs-6 text-secondary" for="switchDispo">
                                     Producto disponible para la venta en el Menú
                                 </label>
@@ -120,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="modal-footer bg-light">
                     <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
                     <!-- El botón se deshabilita automáticamente si el formulario incumple las validaciones -->
