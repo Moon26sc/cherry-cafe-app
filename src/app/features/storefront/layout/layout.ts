@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { CarritoService } from '../../../core/services/carrito';
+import { Router, RouterModule } from '@angular/router';
+import { CarritoService } from '../../../core/services/carrito'; 
+import { AuthService } from '../../../core/services/auth';     
 
 @Component({
   selector: 'app-layout',
@@ -10,7 +11,31 @@ import { CarritoService } from '../../../core/services/carrito';
   templateUrl: './layout.html',
   styleUrls: ['./layout.css']
 })
-export class LayoutComponent {
-  // Al hacerlo public, el HTML puede acceder directamente al servicio
+export class LayoutComponent implements OnInit {
   public carritoService = inject(CarritoService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  
+  private cdr = inject(ChangeDetectorRef); 
+
+  usuarioActual: any = null;
+  menuAbierto: boolean = false; // <-- Para controlar el dropdown de Bootstrap
+
+  ngOnInit() {
+    this.authService.currentUser$.subscribe(user => {
+      this.usuarioActual = user;
+      
+      this.cdr.detectChanges(); 
+    });
+  }
+
+  toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  cerrarSesion() {
+    this.menuAbierto = false;
+    this.authService.logout();
+    this.router.navigate(['/inicio']);
+  }
 }

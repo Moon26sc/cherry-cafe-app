@@ -1,0 +1,58 @@
+<section class="bg-light py-5 min-vh-100">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h1 class="fw-bold">Mis Pedidos</h1>
+                <p class="text-secondary">Aquí puedes ver el historial de todas tus compras.</p>
+            </div>
+            <a routerLink="/menu" class="btn btn-dark">Nuevo pedido</a>
+        </div>
+
+        <div *ngIf="cargando" class="text-center py-5">
+            <div class="spinner-border text-dark" role="status"></div>
+            <p class="mt-2 text-secondary">Cargando tu historial...</p>
+        </div>
+
+        <div *ngIf="!cargando && historialPedidos.length === 0" class="text-center py-5 bg-white border rounded shadow-sm">
+            <i class="bi bi-box-seam display-1 text-muted mb-3"></i>
+            <h3>Aún no tienes pedidos</h3>
+            <p class="text-secondary">Parece que todavía no has disfrutado de nuestro café.</p>
+            <a routerLink="/menu" class="btn btn-outline-dark mt-2">Ir al menú</a>
+        </div>
+
+        <div *ngIf="!cargando && historialPedidos.length > 0" class="row g-4">
+        <div class="col-12" *ngFor="let pedido of historialPedidos">
+                <div class="card border-0 shadow-sm p-4">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-3 mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Pedido #{{ pedido.id_pedido }}</h5>
+                            <small class="text-secondary">
+                                <i class="bi bi-calendar3 me-1"></i> {{ pedido.fecha | date:'medium' }}
+                            </small>
+                        </div>
+                        <div class="mt-2 mt-md-0 d-flex align-items-center gap-3">
+                            <h5 class="fw-bold mb-0">S/ {{ pedido.total }}</h5>
+                            
+                            <span class="badge px-3 py-2"
+                                  [ngClass]="{
+                                    'bg-warning text-dark': pedido.estado === 'PENDIENTE',
+                                    'bg-primary': pedido.estado === 'EN PREPARACION',
+                                    'bg-success': pedido.estado === 'COMPLETADO' || pedido.estado === 'ENTREGADO'
+                                  }">
+                                {{ pedido.estado }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-semibold text-secondary mb-3">Detalle de productos:</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li *ngFor="let item of pedido.items" class="d-flex justify-content-between mb-2 small">
+                            <span><span class="fw-bold">{{ item.cantidad }}x</span> {{ item.nombre }}</span>
+                            <span class="text-secondary">S/ {{ item.subtotal }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
