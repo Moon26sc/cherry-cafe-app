@@ -1,0 +1,18 @@
+/* Logo del sidebar: mismos colores que el logo de la barra de la tienda */
+.admin-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.admin-brand .brand-script {
+    color: var(--cf-cream-soft);
+}
+.admin-brand .brand-serif {
+    color: var(--cf-sage-light);
+}
+.admin-brand-sub {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}

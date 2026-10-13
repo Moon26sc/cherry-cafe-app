@@ -5,6 +5,7 @@ import { LayoutComponent } from './features/storefront/layout/layout';
 import { InicioComponent } from './features/storefront/pages/inicio/inicio';
 import { MenuComponent } from './features/storefront/pages/menu/menu';
 import { PedidoComponent } from './features/storefront/pages/pedido/pedido';
+import { NosotrosComponent } from './features/storefront/pages/nosotros/nosotros';
 
 // Imports del Administrador (con Alias para el Layout)
 import { LayoutComponent as AdminLayout } from './features/admin/layout/layout';
@@ -24,6 +25,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
       { path: 'inicio', component: InicioComponent },
       { path: 'menu', component: MenuComponent },
+      { path: 'nosotros', component: NosotrosComponent },
       { path: 'pedido', component: PedidoComponent }
     ]
   },

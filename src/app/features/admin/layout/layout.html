@@ -2,9 +2,14 @@
     
     <!-- ================= SIDEBAR ADMINISTRATIVO ================= -->
     <div class="bg-dark text-white p-3 d-flex flex-column shadow-sm" style="width: 260px; position: sticky; top: 0; height: 100vh;">
-        <a routerLink="/admin/dashboard" class="d-flex align-items-center text-white text-decoration-none mb-4 mt-2">
-            <i class="bi bi-cup-hot-fill fs-3 me-2" style="color: #ff4757;"></i>
-            <span class="fs-4 fw-semibold">CherryAdmin</span>
+        <!-- Mismo logo que la tienda (clases brand-* definidas en styles.css) -->
+        <a routerLink="/admin/dashboard" class="admin-brand text-decoration-none mb-4 mt-2">
+            <div class="d-flex align-items-center">
+                <img src="assets/img/logo-mark-claro.svg" alt="Cherry Café" height="36" class="brand-mark me-2">
+                <span class="brand-type"><span class="brand-script">Cherry</span><span
+                        class="brand-serif">Café</span></span>
+            </div>
+            <span class="admin-brand-sub">Panel de administración</span>
         </a>
         
         <ul class="nav nav-pills flex-column mb-auto gap-2">

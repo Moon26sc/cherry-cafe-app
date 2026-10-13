@@ -1,0 +1,102 @@
+<!-- NOTA: los textos, la dirección y el horario son de ejemplo. Cambiarlos por los reales. -->
+
+<!-- ================= ENCABEZADO ================= -->
+<section class="bg-light py-5 border-bottom">
+    <div class="container py-4 text-center">
+        <span class="text-secondary text-uppercase small fw-semibold">Nosotros</span>
+        <h1 class="display-5 fw-normal mt-2">Nuestra historia</h1>
+        <hr class="mx-auto my-4 bg-dark border-2 border-dark opacity-100 nosotros-rule">
+        <p class="lead text-secondary mx-auto nosotros-intro">
+            Detrás de cada taza hay personas, historias y una forma de entender el café.
+        </p>
+    </div>
+</section>
+
+<!-- ================= HISTORIA ================= -->
+<section id="historia" class="bg-white py-5">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="cf-photo">
+                    <img src="assets/img/nosotros.jpeg" alt="Interior de Cherry Café">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="text-secondary text-uppercase small fw-semibold">Cómo empezó</span>
+                <h2 class="fw-normal mt-2">Un sueño con aroma a café</h2>
+                <p class="text-secondary mt-3">
+                    Cherry Café nació de una idea sencilla: crear un lugar donde el tiempo vaya un poco más lento.
+                    Empezamos con una pequeña barra, una cafetera y muchas ganas de compartir lo que nos apasiona.
+                </p>
+                <p class="text-secondary">
+                    Hoy seguimos fieles a esa idea. Cada bebida se prepara al momento y cada rincón está pensado
+                    para que disfrutes tu pausa, ya sea solo, con amigos o con un buen libro.
+                </p>
+                <a routerLink="/menu" class="btn btn-dark mt-3">Conoce nuestro menú</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= VALORES ================= -->
+<section id="valores" class="bg-light py-5 border-top">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="text-secondary text-uppercase small fw-semibold">Lo que nos mueve</span>
+            <h2 class="fw-normal mt-2">Nuestros valores</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" *ngFor="let valor of valores">
+                <div class="card h-100 border-0 shadow-sm text-center p-4">
+                    <div class="nosotros-icono mx-auto mb-3">
+                        <i class="bi {{ valor.icono }} fs-3"></i>
+                    </div>
+                    <h3 class="h5">{{ valor.titulo }}</h3>
+                    <p class="text-secondary small mb-0">{{ valor.texto }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= VISÍTANOS ================= -->
+<section id="visitanos" class="bg-white py-5 border-top">
+    <div class="container py-5">
+        <div class="row align-items-center g-5 flex-lg-row-reverse">
+            <div class="col-lg-6">
+                <div class="cf-photo">
+                    <img src="assets/img/nosotros2.jpeg" alt="Salón de Cherry Café">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="text-secondary text-uppercase small fw-semibold">Te esperamos</span>
+                <h2 class="fw-normal mt-2">Visítanos</h2>
+
+                <ul class="list-unstyled mt-4 mb-0">
+                    <li class="d-flex mb-4">
+                        <i class="bi bi-geo-alt fs-4 me-3 nosotros-dato-icono"></i>
+                        <div>
+                            <strong class="d-block">Dirección</strong>
+                            <span class="text-secondary">Av. Principal 123, Lima</span>
+                        </div>
+                    </li>
+                    <li class="d-flex mb-4">
+                        <i class="bi bi-clock fs-4 me-3 nosotros-dato-icono"></i>
+                        <div>
+                            <strong class="d-block">Horario</strong>
+                            <span class="text-secondary">Lunes a viernes: 7:00 a. m. – 9:00 p. m.</span><br>
+                            <span class="text-secondary">Sábados y domingos: 8:00 a. m. – 10:00 p. m.</span>
+                        </div>
+                    </li>
+                    <li class="d-flex">
+                        <i class="bi bi-telephone fs-4 me-3 nosotros-dato-icono"></i>
+                        <div>
+                            <strong class="d-block">Teléfono</strong>
+                            <span class="text-secondary">999 888 777</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
