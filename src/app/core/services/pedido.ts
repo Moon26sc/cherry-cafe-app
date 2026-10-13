@@ -16,4 +16,9 @@ export class PedidoService {
   obtenerMisPedidos(idCliente: number): Observable<any> {
     return this.http.get(`http://localhost:8000/api/mis_pedidos.php?id_cliente=${idCliente}`);
   }
+
+  obtenerUltimosPedidosAdmin(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/pedidos_admin.php');
+  }
+
 }
