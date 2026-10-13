@@ -4,6 +4,7 @@ import { LayoutComponent } from './features/storefront/layout/layout';
 import { InicioComponent } from './features/storefront/pages/inicio/inicio';
 import { MenuComponent } from './features/storefront/pages/menu/menu';
 import { PedidoComponent } from './features/storefront/pages/pedido/pedido';
+import { NosotrosComponent } from './features/storefront/pages/nosotros/nosotros';
 
 import { LayoutComponent as AdminLayout } from './features/admin/layout/layout';
 import { DashboardComponent } from './features/admin/pages/dashboard/dashboard';
@@ -25,10 +26,13 @@ export const routes: Routes = [
         { path: 'inicio', component: InicioComponent },
         { path: 'menu', component: MenuComponent },
         { path: 'pedido', component: PedidoComponent },
+        { path: 'nosotros', component: NosotrosComponent },
         { path: 'mis-pedidos', component: MisPedidosComponent }
       ]
     },
     
+ 
+  
   // ================= ZONA ADMINISTRATIVA =================
   {
     path: 'admin',
