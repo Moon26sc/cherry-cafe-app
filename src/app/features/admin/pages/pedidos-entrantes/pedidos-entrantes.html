@@ -1,0 +1,75 @@
+<div class="container-fluid pb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h2 class="fw-bold mb-0">Pedidos Entrantes</h2>
+            <p class="text-secondary mb-0">Gestión y preparación de órdenes</p>
+        </div>
+        <button class="btn btn-outline-dark" (click)="cargarPedidos()">
+            <i class="bi bi-arrow-clockwise me-1"></i> Actualizar
+        </button>
+    </div>
+
+    <!-- Spinner de carga -->
+    <div *ngIf="cargando" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-secondary">Cargando la lista de pedidos...</p>
+    </div>
+
+    <!-- Tabla Principal -->
+    <div *ngIf="!cargando" class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4 py-3">N° Pedido</th>
+                            <th scope="col" class="py-3">Fecha y Hora</th>
+                            <th scope="col" class="py-3">Cliente</th>
+                            <th scope="col" class="py-3">Tipo</th>
+                            <th scope="col" class="py-3">Total</th>
+                            <th scope="col" class="pe-4 py-3">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Fila si no hay pedidos -->
+                        <tr *ngIf="pedidos.length === 0">
+                            <td colspan="6" class="text-center py-4 text-secondary">No hay pedidos registrados.</td>
+                        </tr>
+                        
+                        <!-- Iteramos todos los pedidos -->
+                        <tr *ngFor="let pedido of pedidos">
+                            <td class="ps-4 fw-bold">#{{ pedido.id_pedido }}</td>
+                            <td>{{ pedido.fecha | date:'short' }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="bg-light rounded-circle p-2">
+                                        <i class="bi bi-person text-secondary"></i>
+                                    </div>
+                                    <span class="fw-semibold">{{ pedido.cliente }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    <i class="bi" [ngClass]="pedido.tipo_entrega === 'DELIVERY' ? 'bi-motorcycle' : 'bi-shop'"></i> 
+                                    {{ pedido.tipo_entrega }}
+                                </span>
+                            </td>
+                            <td class="fw-bold text-success">S/ {{ pedido.total | number:'1.2-2' }}</td>
+                            <td class="pe-4">
+                                <!-- El Mismo Select Mágico del Dashboard -->
+                                <select class="form-select form-select-sm fw-bold shadow-sm text-center" 
+                                        [ngClass]="claseEstado(pedido.estado)"
+                                        (change)="cambiarEstado(pedido, $event)">
+                                    <option value="PENDIENTE" [selected]="pedido.estado === 'PENDIENTE'">Pendiente</option>
+                                    <option value="EN PREPARACION" [selected]="pedido.estado === 'EN PREPARACION'">En preparación</option>
+                                    <option value="ENTREGADO" [selected]="pedido.estado === 'ENTREGADO'">Entregado</option>
+                                    <option value="CANCELADO" [selected]="pedido.estado === 'CANCELADO'">Cancelado</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,199 @@
+<div class="container-fluid pb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h2 class="fw-bold mb-0">Directorio General</h2>
+            <p class="text-secondary mb-0">Gestión de equipo y fidelidad de clientes</p>
+        </div>
+        <!-- Botón dinámico "+" -->
+        <button class="btn btn-dark" (click)="abrirModalNuevo()">
+            <i class="bi bi-plus-lg me-1"></i>
+            Nuevo {{ vistaActual === 'clientes' ? 'Cliente' : 'Colaborador' }}
+        </button>
+    </div>
+
+    <!-- PESTAÑAS (TABS) -->
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link fw-bold" [class.active]="vistaActual === 'clientes'" (click)="cambiarVista('clientes')"
+                style="cursor: pointer;">
+                <i class="bi bi-people-fill me-2"></i> Clientes ({{ clientes.length }})
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-bold" [class.active]="vistaActual === 'colaboradores'"
+                (click)="cambiarVista('colaboradores')" style="cursor: pointer;">
+                <i class="bi bi-person-workspace me-2"></i> Equipo de Trabajo ({{ colaboradores.length }})
+            </a>
+        </li>
+    </ul>
+
+    <div *ngIf="cargando" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+    </div>
+
+    <div *ngIf="!cargando" class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+
+                <!-- TABLA DE CLIENTES (Se muestra solo si la pestaña es 'clientes') -->
+                <table class="table table-hover align-middle mb-0" *ngIf="vistaActual === 'clientes'">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3">Cliente</th>
+                            <th class="py-3">Contacto</th>
+                            <th class="py-3">Tiempo con nosotros</th>
+                            <th class="pe-4 py-3 text-center">Puntos / Rewards</th>
+                            <th class="pe-4 py-3 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cliente of clientes">
+                            <td class="ps-4 fw-bold">
+                                <i class="bi bi-person-circle text-secondary fs-4 me-2 align-middle"></i>
+                                {{ cliente.nombre }}
+                            </td>
+                            <td>{{ cliente.email }}</td>
+
+                            <!-- Aquí usamos la nueva función matemática -->
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    <i class="bi bi-clock-history me-1"></i> {{
+                                    calcularAntiguedad(cliente.fecha_registro) }}
+                                </span>
+                            </td>
+
+                            <td class="pe-4 text-center">
+                                <span class="badge rounded-pill px-3 py-2"
+                                    [ngClass]="cliente.puntos_fidelidad >= 100 ? 'bg-warning text-dark' : 'bg-light text-dark border'">
+                                    <i class="bi bi-star-fill text-warning me-1"
+                                        *ngIf="cliente.puntos_fidelidad >= 100"></i>
+                                    {{ cliente.puntos_fidelidad || 0 }} pts
+                                </span>
+                            </td>
+                            <td class="pe-4 text-end">
+                                <button class="btn btn-sm btn-outline-primary" (click)="abrirModalEditar(cliente)">
+                                    <!-- o (abrirModalEditar(usuario)) en la tabla de equipo -->
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- TABLA DE COLABORADORES (Se muestra solo si la pestaña es 'colaboradores') -->
+                <table class="table table-hover align-middle mb-0" *ngIf="vistaActual === 'colaboradores'">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3">Colaborador</th>
+                            <th class="py-3">Acceso</th>
+                            <th class="pe-4 py-3 text-center">Rol en Sistema</th>
+                            <th class="pe-4 py-3 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of colaboradores">
+                            <td class="ps-4 fw-bold">
+                                <i class="bi bi-person-badge-fill text-primary fs-4 me-2 align-middle"></i>
+                                {{ usuario.nombre }}
+                            </td>
+                            <td>{{ usuario.email }}</td>
+                            <td class="pe-4 text-center">
+                                <span class="badge rounded-pill px-3 py-2 border shadow-sm"
+                                    [ngClass]="colorRol(usuario.rol)">
+                                    {{ usuario.rol }}
+                                </span>
+                            </td>
+                            <td class="pe-4 text-end">
+                                <button class="btn btn-sm btn-outline-primary" (click)="abrirModalEditar(usuario)">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- OVERLAY OSCURO DEL MODAL -->
+<div class="modal-backdrop fade show" *ngIf="mostrarModal" style="background-color: rgba(0,0,0,0.5);"></div>
+
+<!-- VENTANA MODAL -->
+<div class="modal fade show d-block" tabindex="-1" *ngIf="mostrarModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header bg-light border-0">
+                <h5 class="modal-title fw-bold">
+                    {{ modoEdicion ? 'Editar' : 'Nuevo' }}
+                    {{ vistaActual === 'clientes' ? 'Cliente' : 'Colaborador' }}
+                </h5>
+                <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+            </div>
+
+            <div class="modal-body p-4">
+                <form (ngSubmit)="guardarDatos()">
+
+                    <!-- Campos Comunes (Nombre y Email) -->
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Nombre Completo</label>
+                        <input type="text" class="form-control" name="nombre" [(ngModel)]="formularioActual.nombre"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Correo Electrónico</label>
+                        <input type="email" class="form-control" name="email" [(ngModel)]="formularioActual.email"
+                            required>
+                    </div>
+
+                    <!-- Campos EXCLUSIVOS de Cliente -->
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Teléfono</label>
+                        <input type="tel" class="form-control" name="telefono" [(ngModel)]="formularioActual.telefono">
+                    </div>
+                    <!-- Cambia 'direccion' por 'direccion_entrega' -->
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Dirección</label>
+                        <input type="text" class="form-control" name="direccion_entrega"
+                            [(ngModel)]="formularioActual.direccion_entrega">
+                    </div>
+
+                    <!-- Campos EXCLUSIVOS de Colaborador -->
+                    <div class="row g-3 mb-3" *ngIf="formularioActual.rol !== 'CLIENTE'">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Rol en Sistema</label>
+                            <select class="form-select" name="rol" [(ngModel)]="formularioActual.rol">
+                                <option value="CAJERO">Cajero</option>
+                                <option value="BARISTA">Barista</option>
+                                <option value="ADMIN">Administrador</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Estado</label>
+                            <select class="form-select" name="estado" [(ngModel)]="formularioActual.estado"
+                                [ngClass]="formularioActual.estado === 'BAJA' ? 'text-danger fw-bold' : 'text-success fw-bold'">
+                                <option value="ACTIVO">Activo (Trabajando)</option>
+                                <option value="BAJA">Dado de Baja</option>
+                            </select>
+                        </div>
+                        <div class="col-12" *ngIf="!modoEdicion || (modoEdicion && formularioActual.rol !== 'CLIENTE')">
+                            <label class="form-label small fw-bold">Contraseña {{ modoEdicion ? '(Dejar en blanco para
+                                no cambiar)' : '' }}</label>
+                            <input type="password" class="form-control" name="password"
+                                [(ngModel)]="formularioActual.password">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-dark px-4">
+                            <i class="bi bi-floppy me-1"></i> Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

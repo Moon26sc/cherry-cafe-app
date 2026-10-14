@@ -5,9 +5,6 @@
             <h2 class="fw-bold mb-0">Resumen</h2>
             <p class="text-secondary mb-0">Así va Cherry Café hoy</p>
         </div>
-        <span class="badge rounded-pill aviso-ejemplo px-3 py-2">
-            <i class="bi bi-info-circle me-1"></i> Datos de ejemplo
-        </span>
     </div>
 
     <div class="row g-4 mb-4">
@@ -50,9 +47,19 @@
                                     <td>{{ pedido.cliente }}</td>
                                     <td>S/ {{ pedido.total.toFixed(2) }}</td>
                                     <td class="pe-4">
-                                        <span class="badge rounded-pill" [ngClass]="claseEstado(pedido.estado)">
-                                            {{ pedido.estado }}
-                                        </span>
+                                        <select
+                                            class="form-select form-select-sm fw-bold border-0 shadow-sm text-center"
+                                            [ngClass]="claseEstado(pedido.estado)"
+                                            (change)="cambiarEstado(pedido, $event)">
+                                            <option value="PENDIENTE" [selected]="pedido.estado === 'PENDIENTE'">
+                                                Pendiente</option>
+                                            <option value="EN PREPARACION"
+                                                [selected]="pedido.estado === 'EN PREPARACION'">En preparación</option>
+                                            <option value="ENTREGADO" [selected]="pedido.estado === 'ENTREGADO'">
+                                                Entregado</option>
+                                            <option value="CANCELADO" [selected]="pedido.estado === 'CANCELADO'">
+                                                Cancelado</option>
+                                        </select>
                                     </td>
                                 </tr>
                             </tbody>
@@ -77,21 +84,6 @@
                         <div class="progress barra-ventas">
                             <div class="progress-bar" [style.width.%]="producto.ventas / maxVentas * 100"></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Accesos rápidos -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold mb-3">Accesos rápidos</h5>
-                    <div class="d-grid gap-2">
-                        <a routerLink="/admin/productos" class="btn btn-dark">
-                            <i class="bi bi-box-seam me-1"></i> Gestionar productos
-                        </a>
-                        <a routerLink="/inicio" class="btn btn-outline-dark">
-                            <i class="bi bi-shop me-1"></i> Ver tienda pública
-                        </a>
                     </div>
                 </div>
             </div>

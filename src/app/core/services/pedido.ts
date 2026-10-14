@@ -21,4 +21,20 @@ export class PedidoService {
     return this.http.get('http://localhost:8000/api/pedidos_admin.php');
   }
 
+  actualizarEstado(idPedido: number, nuevoEstado: string): Observable<any> {
+    const payload = {
+      id_pedido: idPedido,
+      estado: nuevoEstado
+    };
+    return this.http.post('http://localhost:8000/api/actualizar_estado.php', payload);
+  }
+
+  obtenerResumenDashboard(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/resumen_dashboard.php');
+  }
+
+  obtenerTodosLosPedidosAdmin(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/pedidos_entrantes.php');
+  }
+
 }
