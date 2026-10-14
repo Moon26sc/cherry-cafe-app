@@ -19,7 +19,7 @@ export class LayoutComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef); 
 
   usuarioActual: any = null;
-  menuAbierto: boolean = false; // <-- Para controlar el dropdown de Bootstrap
+  menuAbierto: boolean = false; 
 
   ngOnInit() {
     this.authService.currentUser$.subscribe(user => {

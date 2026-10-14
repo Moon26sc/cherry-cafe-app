@@ -1,9 +1,9 @@
-import { Component, OnInit, inject, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { Producto } from '../../../../shared/models/producto';
 import { CarritoService } from '../../../../core/services/carrito';
-import { ProductoService } from '../../../../core/services/producto'; 
+import { ProductoService } from '../../../../core/services/producto';
 
 @Component({
   selector: 'app-menu',
@@ -21,17 +21,27 @@ export class MenuComponent implements OnInit {
   terminoBusqueda: string = '';
   productoSeleccionado: Producto | null = null;
 
-  productos: Producto[] = []; 
+  productos: Producto[] = [];
   productosFiltrados: Producto[] = [];
+  cargando = true;
+  errorCarga = false;
 
   ngOnInit() {
     this.productoService.getProductos().subscribe({
       next: (datosDesdePostgreSQL) => {
         this.productos = datosDesdePostgreSQL;
         this.productosFiltrados = [...this.productos];
-        this.cdr.detectChanges(); 
+        
+        this.cargando = false; 
+        
+        this.cdr.detectChanges();
       },
-      error: (error) => console.error('Error al conectar con la API PHP:', error)
+      error: (error) => {
+        console.error('Error al conectar con la API PHP:', error);
+        this.cargando = false;
+        this.errorCarga = true;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -47,7 +57,7 @@ export class MenuComponent implements OnInit {
     }
     if (this.terminoBusqueda.trim() !== '') {
       const termino = this.terminoBusqueda.toLowerCase();
-      filtrados = filtrados.filter(p => 
+      filtrados = filtrados.filter(p =>
         p.nombre.toLowerCase().includes(termino) || p.descripcion.toLowerCase().includes(termino)
       );
     }

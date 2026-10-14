@@ -36,11 +36,21 @@
                             <button type="button" class="btn btn-outline-dark btn-sm"
                                 [class.active]="categoriaActual === 'Acompañamientos'"
                                 (click)="establecerCategoria('Acompañamientos')">Acompañamientos</button>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+                @if (cargando) {
+            <div class="text-center py-4">
+                <div class="spinner-border text-dark" role="status"></div>
+                <p class="mt-2 text-secondary">Cargando menú...</p>
+            </div>
+        }
+@if (errorCarga) {
+            <div class="alert alert-danger">No se pudo cargar el menú. Verifica que la API esté encendida.</div>
+        }
 
         <!-- ================= GRILLA DE PRODUCTOS ================= -->
         <div class="row g-4 mb-5">

@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./nosotros.css']
 })
 export class NosotrosComponent {
-  // Los valores se recorren con *ngFor en el HTML para no repetir el mismo bloque 3 veces
   valores = [
     {
       icono: 'bi-award',
