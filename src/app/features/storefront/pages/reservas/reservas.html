@@ -1,0 +1,66 @@
+<div class="container py-5" style="max-width: 640px;">
+  <h1 class="fw-bold mb-2">Reserva tu mesa</h1>
+  <p class="text-secondary mb-4">Completa tus datos y te esperamos en Cherry Café.</p>
+
+  @if (enviado) {
+    <div class="alert alert-success">
+      <h5 class="alert-heading">¡Reserva registrada!</h5>
+      <p class="mb-0">
+        Gracias {{ reserva.nombre }}, te esperamos el {{ reserva.fecha | date:'dd/MM/yyyy' }}
+        para {{ reserva.personas }} persona(s).
+      </p>
+    </div>
+    <button type="button" class="btn btn-outline-dark" (click)="nuevaReserva()">Hacer otra reserva</button>
+  } @else {
+    <form #form="ngForm" (ngSubmit)="registrar()" class="card border-0 shadow-sm p-4">
+
+      <div class="mb-3">
+        <label class="form-label">Nombre completo</label>
+        <input type="text" class="form-control" name="nombre" [(ngModel)]="reserva.nombre"
+               #nombre="ngModel" required minlength="3"
+               [class.is-invalid]="nombre.invalid && nombre.touched">
+        @if (nombre.invalid && nombre.touched) {
+          <div class="text-danger small mt-1">Ingresa tu nombre (mínimo 3 letras).</div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" name="correo" [(ngModel)]="reserva.correo"
+               #correo="ngModel" required email
+               [class.is-invalid]="correo.invalid && correo.touched">
+        @if (correo.invalid && correo.touched) {
+          <div class="text-danger small mt-1">Ingresa un correo válido.</div>
+        }
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <label class="form-label">Fecha</label>
+          <input type="date" class="form-control" name="fecha" [(ngModel)]="reserva.fecha"
+                 #fecha="ngModel" required
+                 [class.is-invalid]="fecha.invalid && fecha.touched">
+          @if (fecha.invalid && fecha.touched) {
+            <div class="text-danger small mt-1">Elige una fecha.</div>
+          }
+        </div>
+        <div class="col-md-5">
+          <label class="form-label">Personas</label>
+          <input type="number" class="form-control" name="personas" [(ngModel)]="reserva.personas"
+                 #personas="ngModel" required min="1" max="10"
+                 [class.is-invalid]="personas.invalid && personas.touched">
+          @if (personas.invalid && personas.touched) {
+            <div class="text-danger small mt-1">Entre 1 y 10 personas.</div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Comentario (opcional)</label>
+        <textarea class="form-control" rows="2" name="comentario" [(ngModel)]="reserva.comentario"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-dark w-100" [disabled]="form.invalid">Reservar mesa</button>
+    </form>
+  }
+</div>

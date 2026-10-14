@@ -14,20 +14,24 @@ import { MisPedidosComponent } from './features/storefront/pages/mis-pedidos/mis
 import { LayoutComponent as AuthLayout } from './features/auth/layout/layout';
 import { LoginComponent } from './features/auth/pages/login/login';
 import { RegistroComponent } from './features/auth/pages/registro/registro';
-
+import { MisPedidosComponent } from './features/storefront/pages/mis-pedidos/mis-pedidos'; 
+import { EventosComponent } from './features/storefront/pages/eventos/eventos';      
+import { ReservasComponent } from './features/storefront/pages/reservas/reservas';    
 
 export const routes: Routes = [
     // ================= ZONA DEL CLIENTE =================
     {
       path: '',
       component: LayoutComponent,
-      children: [
+            children: [
         { path: '', redirectTo: 'inicio', pathMatch: 'full' },
         { path: 'inicio', component: InicioComponent },
         { path: 'menu', component: MenuComponent },
         { path: 'pedido', component: PedidoComponent },
         { path: 'nosotros', component: NosotrosComponent },
-        { path: 'mis-pedidos', component: MisPedidosComponent }
+        { path: 'mis-pedidos', component: MisPedidosComponent },   
+        { path: 'eventos', component: EventosComponent },          
+        { path: 'reservas', component: ReservasComponent }         
       ]
     },
     

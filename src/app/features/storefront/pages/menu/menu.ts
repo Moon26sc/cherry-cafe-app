@@ -23,15 +23,23 @@ export class MenuComponent implements OnInit {
 
   productos: Producto[] = []; 
   productosFiltrados: Producto[] = [];
+  cargando = true;          
+  errorCarga = false;       
 
   ngOnInit() {
+
     this.productoService.getProductos().subscribe({
       next: (datosDesdePostgreSQL) => {
         this.productos = datosDesdePostgreSQL;
         this.productosFiltrados = [...this.productos];
         this.cdr.detectChanges(); 
       },
-      error: (error) => console.error('Error al conectar con la API PHP:', error)
+      error: (error) => {                           
+        console.error('Error al conectar con la API PHP:', error);
+        this.cargando = false;
+        this.errorCarga = true;
+        this.cdr.detectChanges();
+      }
     });
   }
 
